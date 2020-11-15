@@ -21,20 +21,19 @@ import (
 //
 //Bob's conversational partner is a purist when it comes to written communication and always follows normal rules regarding sentence punctuation in English.
 func Hey(remark string) string {
-	remark = strings.Trim(remark, " ")
-	if !isSayingAnything(remark) {
+	remark = strings.TrimSpace(remark)
+	switch {
+	case !isSayingAnything(remark):
 		return "Fine. Be that way!"
-	}
-	if isQuestion(remark) {
-		if isYell(remark) {
-			return "Calm down, I know what I'm doing!"
-		}
+	case isQuestion(remark) && isYell(remark):
+		return "Calm down, I know what I'm doing!"
+	case isQuestion(remark):
 		return "Sure."
-	}
-	if isYell(remark) {
+	case isYell(remark):
 		return "Whoa, chill out!"
+	default:
+		return "Whatever."
 	}
-	return "Whatever."
 }
 
 func isQuestion(remark string) bool {
